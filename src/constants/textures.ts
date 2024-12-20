@@ -14,4 +14,5 @@ export class TexturesMaps {
 	public static PAINT_GREEN = "./images/zelkraska.jpg";
 	public static ASPHALT = "./images/asfalt1.jpg";
 	public static GRASS = "./images/planee.jpg";
+	public static GOLD = "./images/zoloto.jpg"
 }

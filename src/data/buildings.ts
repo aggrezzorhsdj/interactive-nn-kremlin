@@ -5,16 +5,16 @@ import {TexturesMaps} from "../constants/textures";
 export const buildings: BuildingProps[] = [
 	{
 		name: "arsenal",
-		x: 362,
-		z: -665,
+		x: 382,
+		z: -730,
 		url: "./models/arsenal.glb",
 		textureUrls: [TexturesMaps.SHEET, TexturesMaps.BRICK_RED, TexturesMaps.PUTTY],
-		angle: 0,
+		angle: -1,
 		loaderType: GLTFLoader
 	},
 	{
 		name: "hozkorpus",
-		x: 768,
+		x: 688,
 		z: 986,
 		url: "./models/hozkorpus.glb",
 		textureUrls: [TexturesMaps.ROOFING_FELT, TexturesMaps.BRICK_RED],
@@ -23,8 +23,8 @@ export const buildings: BuildingProps[] = [
 	},
 	{
 		name: "sovet",
-		x: -32,
-		z: -492,
+		x: -119,
+		z: -646,
 		url: "./models/sovet2.glb",
 		textureUrls: [
 			TexturesMaps.WOOD,
@@ -42,7 +42,7 @@ export const buildings: BuildingProps[] = [
 		angle: 0,
 		loaderType: GLTFLoader
 	},
-	{
+	/*{
 		name: "zelhouse",
 		x: 638,
 		z: 912,
@@ -50,11 +50,11 @@ export const buildings: BuildingProps[] = [
 		textureUrls: [TexturesMaps.SHEET_GREEN, TexturesMaps.BRICK_RED],
 		angle: 0,
 		loaderType: GLTFLoader
-	},
+	},*/
 	{
 		name: "garage",
-		x: -319,
-		z: -1249,
+		x: -336,
+		z: -1380,
 		url: "./models/garage.glb",
 		textureUrls: [
 			TexturesMaps.METAL,
@@ -68,8 +68,8 @@ export const buildings: BuildingProps[] = [
 	},
 	{
 		name: "kazar",
-		x: 657,
-		z: 308,
+		x: 729,
+		z: 347,
 		url: "./models/kazar.glb",
 		textureUrls: [
 			TexturesMaps.SHEET,
@@ -98,8 +98,8 @@ export const buildings: BuildingProps[] = [
 	},*/
 	{
 		name: "services",
-		x: -128,
-		z: -1120,
+		x: -139,
+		z: -1240,
 		url: "./models/services.glb",
 		textureUrls: [
 			TexturesMaps.PUTTY_GREY,
@@ -109,6 +109,7 @@ export const buildings: BuildingProps[] = [
 			TexturesMaps.GLASS,
 			TexturesMaps.PUTTY_BEIGE
 		],
+		angle: -1,
 		depthY: 0,
 		loaderType: GLTFLoader
 	},
@@ -153,8 +154,8 @@ export const buildings: BuildingProps[] = [
 	},
 	{
 		name: "kotel",
-		x: -226,
-		z: -975,
+		x: -266,
+		z: -1135,
 		url: "./models/kotel.glb",
 		textureUrls: [
 			TexturesMaps.ROOFING_FELT,
@@ -169,8 +170,8 @@ export const buildings: BuildingProps[] = [
 	},
 	{
 		name: "muzei",
-		x: -231,
-		z: -841,
+		x: -291,
+		z: -974,
 		url: "./models/muzei.glb",
 		textureUrls: [
 			TexturesMaps.WOOD,
@@ -205,7 +206,7 @@ export const buildings: BuildingProps[] = [
 	},
 	{
 		name: "minin",
-		x: -235,
+		x: -355,
 		z: 131,
 		url: "./models/minin.glb",
 		textureUrls: [
@@ -260,8 +261,8 @@ export const buildings: BuildingProps[] = [
 	},
 	{
 		name: "prisut",
-		x: 157,
-		z: 631,
+		x: 208,
+		z: 589,
 		url: "./models/prisut.glb",
 		textureUrls: [
 			"./images/zoloto.jpg",
@@ -280,24 +281,32 @@ export const buildings: BuildingProps[] = [
 		z: 1039,
 		url: "./models/ministry.glb",
 		textureUrls: [
-			TexturesMaps.PUTTY_GREY,
-			TexturesMaps.PUTTY_DARK_GREY,
-			TexturesMaps.PUTTY
+			TexturesMaps.PUTTY,
+			TexturesMaps.PUTTY_BEIGE,
+			TexturesMaps.PUTTY,
+			TexturesMaps.ROOFING_FELT
 		],
 		depthY: -2,
 		loaderType: GLTFLoader
 	},
 	{
-		name: "ministry",
+		name: "manezh",
 		x: 40,
-		z: 1110,
+		z: 1083,
 		url: "./models/manezh.glb",
 		textureUrls: [
 			TexturesMaps.PUTTY_GREY,
-			TexturesMaps.PUTTY_DARK_GREY,
-			TexturesMaps.PUTTY
+			TexturesMaps.SHEET_GREEN,
+			TexturesMaps.BRICK_RED,
+			TexturesMaps.GOLD,
+			TexturesMaps.GOLD,
+			TexturesMaps.SHEET_GREEN,
+			TexturesMaps.PUTTY,
+			TexturesMaps.BRICK_RED,
+			TexturesMaps.BRICK_RED,
+			TexturesMaps.PUTTY,
+			TexturesMaps.PUTTY,
 		],
-		depthY: -2,
 		loaderType: GLTFLoader
 	},
 ];

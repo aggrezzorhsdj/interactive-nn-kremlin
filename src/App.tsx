@@ -1,22 +1,29 @@
-import React from "react";
+import React, {Suspense} from "react";
 import {Canvas} from "@react-three/fiber";
 import {Lights} from "./Light";
 import {Scene} from "./Scene";
-import {Box} from "@react-three/drei";
+import {Loader} from "@react-three/drei";
 
 export const App = () => {
 
 	return (
-		<Canvas shadows="soft" camera={{
-			fov: 60,
-			aspect: window.innerWidth / window.innerHeight,
-			near: 1,
-			far: 100000
-		}}>
-			<Scene />
-			<color attach="background" args={[0, 0, 0]}/>
-			<Lights/>
-			<axesHelper args={[1000]}/>
-		</Canvas>
+		<>
+			{/* установка three js Canvas c параметрами камеры */}
+			<Canvas shadows="soft" camera={{
+				fov: 60,
+				aspect: window.innerWidth / window.innerHeight,
+				near: 1,
+				far: 100000
+			}}>
+				<Suspense fallback={null}>
+					{/* компонент отображения сцены */}
+					<Scene />
+
+					{/* компонент отображения освещения */}
+					<Lights/>
+				</Suspense>
+			</Canvas>
+			<Loader/>
+		</>
 	);
 };

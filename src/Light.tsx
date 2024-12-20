@@ -1,25 +1,9 @@
-import {useControls} from "leva";
-import React, {useEffect, useRef} from "react";
-import {
-	DirectionalLight, DirectionalLightHelper, DirectionalLightShadow,
-	PointLight, SpotLight, SpotLightHelper
-} from "three";
-import {RectAreaLightUniformsLib} from "three/examples/jsm/lights/RectAreaLightUniformsLib";
-import {useHelper} from "@react-three/drei";
+import React from "react";
 
 export const Lights = () => {
-	const ref = useRef<DirectionalLight>(null);
-	useHelper(ref, DirectionalLightHelper);
-
-
-	RectAreaLightUniformsLib.init();
-	useEffect(() => {
-	}, []);
-
 	return (
 		<>
 			<directionalLight
-				ref={ref}
 				castShadow
 				position={[1000, -500, 600]}
 			/>

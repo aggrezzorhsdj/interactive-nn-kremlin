@@ -1,143 +1,147 @@
-import React, {FC, useEffect, useLayoutEffect, useRef, useState} from "react";
-import {useFrame, useLoader, useThree} from "@react-three/fiber";
-import {
-	Box3,
-	BoxGeometry,
-	BoxHelper, BufferGeometry,
-	DoubleSide,
-	Group,
-	MathUtils,
-	Mesh,
-	MeshPhongMaterial, MeshStandardMaterial, MirroredRepeatWrapping, Plane, PlaneGeometry,
-	TextureLoader,
-	Vector3
-} from "three";
-import {getIntersectionPoint} from "../utils/position.utils";
-import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader";
-import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
-import {useHelper, useTexture} from "@react-three/drei";
-import {TexturesMaps} from "../constants/textures";
-import {BaseGroups} from "../models/models";
+	import React, {FC, useEffect, useRef, useState} from "react";
+	import {useLoader, useThree} from "@react-three/fiber";
+	import {
+		Box3,
+		DoubleSide,
+		Group,
+		MathUtils,
+		Mesh,
+		MeshPhongMaterial, MirroredRepeatWrapping,
+		TextureLoader,
+		Vector3
+	} from "three";
+	import {getIntersectionPoint} from "../utils/position.utils";
+	import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader";
+	import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
+	import {useTexture} from "@react-three/drei";
+	import {TexturesMaps} from "../constants/textures";
+	import {BaseGroups} from "../models/models";
+	import {useControls} from "leva";
 
-export interface BuildingProps {
-	name: string;
-	x: number;
-	z: number;
-	loaderType?: any;
-	url: string;
-	textureUrls: string[];
-	angle?: number;
-	scale?: number;
-	depthY?: number;
-}
-export const Building: FC<{building: BuildingProps}> = ({building}) => {
-	const {
-		x,
-		z,
-		url,
-		name,
-		loaderType = OBJLoader,
-		textureUrls,
-		angle,
-		scale,
-		depthY = 0
-	} = building;
-	const {scene} = useThree();
-	const [position, setPosition] = useState<Vector3>(null!);
-	const loadedObject = useLoader(loaderType, url);
-	const groupRef = useRef<Group>(null);
-	// const helper = useHelper(groupRef, BoxHelper);
-	let helper: BoxHelper;
-	const [
-		platform,
-		setPlatform
-	] = useState<{position: Vector3, geometry: [width?: number, height?: number, depth?: number]}>(null!);
-
-	const map = useTexture(TexturesMaps.ASPHALT);
-	map.needsUpdate = true;
-	map.wrapS = MirroredRepeatWrapping;
-	map.wrapT = MirroredRepeatWrapping;
-	map.repeat.set( 1, 1);
-	map.anisotropy = 12;
-
-	let object: Group;
-
-	switch (loaderType) {
-		case OBJLoader:
-			object = loadedObject;
-			break;
-		case GLTFLoader:
-			const meshes: Mesh[] = Object
-				.values<any>(loadedObject.nodes)
-				.filter((item: any) => item instanceof Mesh);
-			const group = new Group();
-			group.add(...meshes);
-			group.name = name;
-			object = group;
-			break;
+	export interface BuildingProps {
+		name: string;
+		x: number;
+		z: number;
+		loaderType?: any;
+		url: string;
+		textureUrls: string[];
+		angle?: number;
+		scale?: number;
+		depthY?: number;
 	}
+	export const Building: FC<{building: BuildingProps}> = ({building}) => {
+		// параметры модели
+		const {
+			x,
+			z,
+			url,
+			name,
+			loaderType = OBJLoader,
+			textureUrls,
+			angle,
+			scale
+		} = building;
 
-	const loader = new TextureLoader();
+		// подключение к общей сцене three.js
+		const {scene} = useThree();
 
-	useEffect(() => {
-		const terrain = scene.children
-			.find(item => item.name === BaseGroups.BASE)?.children
-			.find(item => item.name === BaseGroups.TERRAIN) as Mesh;
+		// состояние для хранения и установки позиции модели
+		const [position, setPosition] = useState<Vector3>(null!);
 
-		const point = getIntersectionPoint(x, z, scene) || new Vector3(0, 0, 0);
+		// загрузка модели через Three.Loader в зависимости от loaderType - OBJLoader и GLTFLoader
+		const loadedObject = useLoader(loaderType, url);
 
-		const box = new Box3().setFromObject(groupRef.current);
-		const center = new Vector3();
-		const size = new Vector3();
-		box.getCenter(center);
-		box.getSize(size);
+		// доступ к отображемой группе three.js
+		const groupRef = useRef<Group>(null);
 
-		const edgeHeight = size.x / 2;
-		const edgeWidth = size.z / 2;
+		let object: Group;
 
+		// извлечение группы из загруженной модели
+		switch (loaderType) {
+			case OBJLoader:
+				object = loadedObject;
+				break;
+			case GLTFLoader:
+				const meshes: Mesh[] = Object
+					.values<any>(loadedObject.nodes)
+					.filter((item: any) => item instanceof Mesh);
+				const group = new Group();
+				group.add(...meshes);
+				group.name = name;
+				object = group;
+				break;
+		}
 
-		const intersections = [
-			new Vector3(x - edgeHeight, point.y, z - edgeWidth),
-			new Vector3(x + edgeHeight, point.y, z + edgeWidth),
-			new Vector3(x - edgeHeight, point.y, z + edgeWidth),
-			new Vector3(x + edgeHeight, point.y, z - edgeWidth)
-		]
-			.map(item => {
-				const pointY = getIntersectionPoint(item.x, item.z, scene) || new Vector3(0, 0, 0);
-				return pointY.y;
-			});
+		const cordX = name + "_x";
+		const cordZ = name + "_z";
+		const cordRotate = name + "_rotate";
 
-		/*setPlatform({
-			position: new Vector3(x, Math.min(...intersections), z),
-			geometry: [size.x, 50, size.z]
-		});*/
+		const controls = useControls(`${name}_controls`, {
+			[cordX]: {value: x, min: -2000, max: 2000},
+			[cordZ]: {value: z, min: -2000, max: 2000},
+			[cordRotate]: {value: angle || 0, min: -360, max: 360},
+		}, {collapsed: true})
 
-		setPosition(new Vector3(x, Math.min(...intersections), z));
-	}, [scene]);
+		// загрузчик текстур
+		const loader = new TextureLoader();
 
-	return (
-		<>
-			<group
-				name={name}
-				ref={groupRef}
-				position={position}
-				rotation-y={MathUtils.DEG2RAD * (angle ?? 0)} scale={scale ?? 1}
-			>
-				{object?.children?.map((mesh: Mesh, index) => {
-					const map = loader.load(textureUrls[index]);
+		useEffect(() => {
+			/*
+			* метод определения точки соприкосновения модели с рельефом
+			* @param x - координата x
+			* @param z - координата z
+			* @param scene - сцена three.js для доступа к рельфеу
+			 */
+			const point = getIntersectionPoint(x, z, scene) || new Vector3(0, 0, 0);
 
-					return <mesh
-						castShadow
-						receiveShadow
-						geometry={mesh.geometry}
-						material={new MeshPhongMaterial({map, side: DoubleSide})}
-					/>
-				})}
-			</group>
-			{platform && <mesh position={platform.position}>
-				<boxGeometry args={platform.geometry}/>
-				<meshStandardMaterial map={map}/>
-			</mesh>}
-		</>
-	);
-}
+			// определение текущей центральной точки модели
+			const box = new Box3().setFromObject(groupRef.current);
+			const center = new Vector3();
+			const size = new Vector3();
+			box.getCenter(center);
+			box.getSize(size);
+
+			// определение ширины и длины модели
+			const edgeHeight = size.x / 2;
+			const edgeWidth = size.z / 2;
+
+			// определение вершин нижней плоскости модели для определение ближайщей точки к рельефу
+			const intersections = [
+				new Vector3(x - edgeHeight, point.y, z - edgeWidth),
+				new Vector3(x + edgeHeight, point.y, z + edgeWidth),
+				new Vector3(x - edgeHeight, point.y, z + edgeWidth),
+				new Vector3(x + edgeHeight, point.y, z - edgeWidth)
+			]
+				.map(item => {
+					const pointY = getIntersectionPoint(item.x, item.z, scene) || new Vector3(0, 0, 0);
+					return pointY.y;
+				});
+			// установка координаты модели относительно ближайщей вершины к рельефу
+			setPosition(new Vector3(x, Math.min(...intersections), z));
+		}, [scene]);
+
+		// вывод модели
+		return (
+			<>
+				<group
+					name={name}
+					ref={groupRef}
+					position={new Vector3(controls[cordX], position?.y || 0, controls[cordZ])}
+					rotation-y={MathUtils.DEG2RAD * (controls[cordRotate] ?? 0)} scale={scale ?? 1}
+				>
+					{/* вывод моделей из группы с указанной текстурой из параметров */}
+					{object?.children?.map((mesh: Mesh, index) => {
+						const map = loader.load(textureUrls[index] || TexturesMaps.PUTTY);
+
+						return <mesh
+							castShadow
+							receiveShadow
+							geometry={mesh.geometry}
+							material={new MeshPhongMaterial({map, side: DoubleSide})}
+						/>
+					})}
+				</group>
+
+			</>
+		);
+	}
