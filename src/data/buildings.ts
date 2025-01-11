@@ -1,8 +1,7 @@
-import {BuildingProps} from "../components/Building";
-import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {TexturesMaps} from "../constants/textures";
+import {BuildingItem} from "../models/models";
 
-export const buildings: BuildingProps[] = [
+export const buildings: BuildingItem[] = [
 	{
 		name: "arsenal",
 		x: 382,
@@ -10,7 +9,7 @@ export const buildings: BuildingProps[] = [
 		url: "./models/arsenal.glb",
 		textureUrls: [TexturesMaps.SHEET, TexturesMaps.BRICK_RED, TexturesMaps.PUTTY],
 		angle: -1,
-		loaderType: GLTFLoader
+
 	},
 	{
 		name: "hozkorpus",
@@ -19,7 +18,7 @@ export const buildings: BuildingProps[] = [
 		url: "./models/hozkorpus.glb",
 		textureUrls: [TexturesMaps.ROOFING_FELT, TexturesMaps.BRICK_RED],
 		angle: 0,
-		loaderType: GLTFLoader
+
 	},
 	{
 		name: "sovet",
@@ -40,7 +39,7 @@ export const buildings: BuildingProps[] = [
 			TexturesMaps.PUTTY
 		],
 		angle: 0,
-		loaderType: GLTFLoader
+
 	},
 	/*{
 		name: "zelhouse",
@@ -49,7 +48,7 @@ export const buildings: BuildingProps[] = [
 		url: "./models/zelhouse.glb",
 		textureUrls: [TexturesMaps.SHEET_GREEN, TexturesMaps.BRICK_RED],
 		angle: 0,
-		loaderType: GLTFLoader
+
 	},*/
 	{
 		name: "garage",
@@ -64,7 +63,7 @@ export const buildings: BuildingProps[] = [
 			TexturesMaps.ROOFING_FELT,
 		],
 		angle: 0,
-		loaderType: GLTFLoader
+
 	},
 	{
 		name: "kazar",
@@ -79,7 +78,7 @@ export const buildings: BuildingProps[] = [
 			TexturesMaps.BRICK_RED,
 		],
 		depthY: -2,
-		loaderType: GLTFLoader
+
 	},
 	/*{
 		name: "kapterka",
@@ -94,7 +93,7 @@ export const buildings: BuildingProps[] = [
 			TexturesMaps.PUTTY_GREY
 		],
 		depthY: 0,
-		loaderType: GLTFLoader
+
 	},*/
 	{
 		name: "services",
@@ -111,7 +110,7 @@ export const buildings: BuildingProps[] = [
 		],
 		angle: -1,
 		depthY: 0,
-		loaderType: GLTFLoader
+
 	},
 	{
 		name: "vicegub",
@@ -126,7 +125,7 @@ export const buildings: BuildingProps[] = [
 			TexturesMaps.PUTTY
 		],
 		depthY: 0,
-		loaderType: GLTFLoader
+
 	},
 	{
 		name: "hospital",
@@ -150,7 +149,7 @@ export const buildings: BuildingProps[] = [
 			TexturesMaps.GLASS
 		],
 		depthY: 0,
-		loaderType: GLTFLoader
+
 	},
 	{
 		name: "kotel",
@@ -165,14 +164,13 @@ export const buildings: BuildingProps[] = [
 			TexturesMaps.PUTTY_GREY,
 			TexturesMaps.PUTTY
 		],
-		depthY: 0,
-		loaderType: GLTFLoader
+		depthY: 0
 	},
 	{
 		name: "muzei",
 		x: -291,
 		z: -974,
-		url: "./models/muzei.glb",
+		url: "./models/muzei-v1.glb",
 		textureUrls: [
 			TexturesMaps.WOOD,
 			TexturesMaps.GLASS,
@@ -186,7 +184,7 @@ export const buildings: BuildingProps[] = [
 			TexturesMaps.PUTTY
 		],
 		depthY: -2,
-		loaderType: GLTFLoader
+
 	},
 	{
 		name: "obkom",
@@ -202,7 +200,7 @@ export const buildings: BuildingProps[] = [
 			TexturesMaps.PUTTY
 		],
 		depthY: -2,
-		loaderType: GLTFLoader
+
 	},
 	{
 		name: "minin",
@@ -218,7 +216,7 @@ export const buildings: BuildingProps[] = [
 			TexturesMaps.PUTTY
 		],
 		depthY: -2,
-		loaderType: GLTFLoader
+
 	},
 	{
 		name: "stella",
@@ -231,12 +229,12 @@ export const buildings: BuildingProps[] = [
 			TexturesMaps.PUTTY
 		],
 		depthY: -2,
-		loaderType: GLTFLoader
+
 	},
 	{
 		name: "church",
-		x: 18,
-		z: 312,
+		x: -78,
+		z: 360,
 		url: "./models/church.glb",
 		textureUrls: [
 			TexturesMaps.METAL,
@@ -257,12 +255,12 @@ export const buildings: BuildingProps[] = [
 			TexturesMaps.PUTTY
 		],
 		depthY: 0,
-		loaderType: GLTFLoader
+
 	},
 	{
 		name: "prisut",
-		x: 208,
-		z: 589,
+		x: 231,
+		z: 733,
 		url: "./models/prisut.glb",
 		textureUrls: [
 			"./images/zoloto.jpg",
@@ -273,12 +271,12 @@ export const buildings: BuildingProps[] = [
 			TexturesMaps.PUTTY_GREY,
 		],
 		depthY: -1,
-		loaderType: GLTFLoader
+
 	},
 	{
 		name: "ministry",
-		x: 392,
-		z: 1039,
+		x: 387,
+		z: 1182,
 		url: "./models/ministry.glb",
 		textureUrls: [
 			TexturesMaps.PUTTY,
@@ -287,12 +285,12 @@ export const buildings: BuildingProps[] = [
 			TexturesMaps.ROOFING_FELT
 		],
 		depthY: -2,
-		loaderType: GLTFLoader
+
 	},
 	{
 		name: "manezh",
-		x: 40,
-		z: 1083,
+		x: 33,
+		z: 1251,
 		url: "./models/manezh.glb",
 		textureUrls: [
 			TexturesMaps.PUTTY_GREY,
@@ -307,6 +305,22 @@ export const buildings: BuildingProps[] = [
 			TexturesMaps.PUTTY,
 			TexturesMaps.PUTTY,
 		],
-		loaderType: GLTFLoader
+
+	},
+	{
+		name: "financial",
+		x: 33,
+		z: 1048,
+		url: "./models/financial.glb",
+		textureUrls: [
+			TexturesMaps.PUTTY,
+			TexturesMaps.PUTTY_BEIGE,
+			TexturesMaps.PUTTY,
+			TexturesMaps.PUTTY,
+			TexturesMaps.ROOFING_FELT,
+			TexturesMaps.ROOFING_FELT,
+			TexturesMaps.PUTTY,
+		],
+
 	},
 ];
