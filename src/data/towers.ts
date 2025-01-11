@@ -3,6 +3,7 @@ import {BuildingItem} from "../models/models";
 export const towers: BuildingItem[] = [
 	{
 		name: "zachatskaya",
+		title: "Зачатская башня",
 		z: -366,
 		x: -1070,
 		url: "./models/zachatskaya.glb",
@@ -12,6 +13,7 @@ export const towers: BuildingItem[] = [
 	},
 	{
 		name: "borisoglebovskaya",
+		title: "Борисоглебовская башня",
 		z: -1019,
 		x: -875,
 		url: "./models/borisoblebovskaya.glb",
@@ -21,6 +23,7 @@ export const towers: BuildingItem[] = [
 	},
 	{
 		name: "georgievskaya",
+		title: "Георгиевская башня",
 		z: -1606,
 		x: -428,
 		url: "./models/georgievskaya.glb",
@@ -31,6 +34,7 @@ export const towers: BuildingItem[] = [
 	},
 	{
 		name: "porohovaya",
+		title: "Пороховая башня",
 		z: -905,
 		x: 288,
 		url: "./models/porohovaya.glb",
@@ -51,6 +55,7 @@ export const towers: BuildingItem[] = [
 	},
 	{
 		name: "kladovaya",
+		title: "Кладовая башня",
 		z: 157,
 		x: 900,
 		url: "./models/kladovaya.glb",
@@ -60,6 +65,7 @@ export const towers: BuildingItem[] = [
 	},
 	{
 		name: "nikolskaya",
+		title: "Никольская башня",
 		z: 784,
 		x: 1072,
 		url: "./models/nikolskaya.glb",
@@ -69,6 +75,7 @@ export const towers: BuildingItem[] = [
 	},
 	{
 		name: "koromislova",
+		title: "Коромыслова башня",
 		z: 1340,
 		x: 900,
 		url: "./models/koromislova.glb",
@@ -78,6 +85,7 @@ export const towers: BuildingItem[] = [
 	},
 	{
 		name: "tainitskaya",
+		title: "Тайнитская башня",
 		z: 1568,
 		x: 7,
 		url: "./models/tainitskaya.glb",
@@ -87,6 +95,7 @@ export const towers: BuildingItem[] = [
 	},
 	{
 		name: "severnaya",
+		title: "Северная башня",
 		z: 1247,
 		x: -486,
 		url: "./models/severnaya.glb",
@@ -96,6 +105,7 @@ export const towers: BuildingItem[] = [
 	},
 	{
 		name: "chasovaya",
+		title: "Часовая башня",
 		z: 1043,
 		x: -459,
 		url: "./models/chasovaya.glb",
@@ -106,6 +116,7 @@ export const towers: BuildingItem[] = [
 	},
 	{
 		name: "ivanovskaya",
+		title: "Ивановская башня",
 		z: 720,
 		x: -883,
 		url: "./models/ivanovskaya.glb",
@@ -116,6 +127,7 @@ export const towers: BuildingItem[] = [
 	},
 	{
 		name: "belaya",
+		title: "Белая башня",
 		z: 149,
 		x: -1037,
 		url: "./models/belaya.glb",

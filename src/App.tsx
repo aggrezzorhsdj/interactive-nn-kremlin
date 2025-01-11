@@ -36,11 +36,11 @@ export const App = () => {
 				{/* установка взаимодействия с камерой */}
 				<CameraControls ref={cameraRef}/>
 
-				<Environment
+				{/*<Environment
 					files="/images/rosendal_plains_2_4k.hdr"
 					background
 					blur={0.5}
-				/>
+				/>*/}
 			</Canvas>
 
 			<Loader/>

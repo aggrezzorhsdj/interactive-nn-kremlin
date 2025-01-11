@@ -3,19 +3,36 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-module.exports = () => ({
+module.exports = (mode) => ({
+	mode,
 	entry: "./src/index.tsx",
 	output: {
-		filename: "bundle.js",
-		path: path.resolve(__dirname, "dist")
+		filename: "[name].[chunkhash].js",
+		path: path.resolve(__dirname, "dist"),
+		clean: true
 	},
 	resolve: {
 		extensions: [".tsx", ".ts", ".js"]
 	},
-	devtool: "source-map",
+	devtool: mode === "development" ? "source-map" : false,
 	devServer: {
 		port: 3030,
 		open: true
+	},
+	optimization: {
+		splitChunks: {
+			chunks: "all",
+			cacheGroups: {
+				vendor: {
+					test: /[\\/]node_modules[\\/]/,
+					name(module) {
+						const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/) ?? 'package';
+						return `${packageName[1].replace('@', '')}`;
+					}
+				}
+			}
+		},
+
 	},
 	module: {
 		rules: [
@@ -44,7 +61,7 @@ module.exports = () => ({
 			template: "src/index.html", // to import index.html file inside index.js
 		}),
 		new MiniCssExtractPlugin({
-			filename: '[name].css',
+			filename: '[name].[chunkhash].css',
 		}),
 		new CopyWebpackPlugin({
 			patterns: [

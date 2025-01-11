@@ -3,7 +3,7 @@ import React from "react";
 export const Lights = () => {
 	return (
 		<>
-			{/*<directionalLight
+			<directionalLight
 				castShadow
 				position={[1000, -500, 600]}
 			/>
@@ -30,7 +30,8 @@ export const Lights = () => {
 				castShadow
 				color={0x222222}
 				position={[-1, 0, 1]}
-			/>*/}
+			/>
+			<ambientLight intensity={0.1} color={0xffffff}/>
 		</>
 	);
 }

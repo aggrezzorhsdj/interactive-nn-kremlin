@@ -24,7 +24,7 @@ export const buildings: BuildingItem[] = [
 		name: "sovet",
 		x: -119,
 		z: -646,
-		url: "./models/sovet2.glb",
+		url: "./models/sovet.glb",
 		textureUrls: [
 			TexturesMaps.WOOD,
 			TexturesMaps.GLASS,
@@ -170,7 +170,7 @@ export const buildings: BuildingItem[] = [
 		name: "muzei",
 		x: -291,
 		z: -974,
-		url: "./models/muzei-v1.glb",
+		url: "./models/muzei.glb",
 		textureUrls: [
 			TexturesMaps.WOOD,
 			TexturesMaps.GLASS,
