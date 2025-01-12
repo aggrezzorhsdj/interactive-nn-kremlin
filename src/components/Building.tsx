@@ -9,7 +9,7 @@ import {
 	Vector3
 } from "three";
 import {getClosestBoxPoint, getIntersectionPoint} from "../utils/position";
-import {BaseGroups, baseGroupsMap, BuildingProps, GLTFLoaderResult} from "../models/models";
+import {BuildingProps, GLTFLoaderResult} from "../models/models";
 import {Html, useGLTF} from "@react-three/drei";
 import {loadTexture} from "../utils/texture";
 import {Popover} from "antd";
@@ -68,9 +68,7 @@ const Building: FC<BuildingProps> = ({building, onClick}) => {
 
 	// обработчик наведения на башню
 	const buildingEnter = () => {
-		if (baseGroupsMap.get(building.name) === BaseGroups.TOWER) {
-			setHover(true);
-		}
+		setHover(true);
 	}
 
 	// обработчик снятия наведения на башню

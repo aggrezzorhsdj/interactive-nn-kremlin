@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {Suspense, useEffect, useRef} from "react";
 import {Canvas} from "@react-three/fiber";
 import {Lights} from "./components/Light";
 import {CameraControls, Loader} from "@react-three/drei";
@@ -34,13 +34,15 @@ export const App = () => {
 				}}
 			>
 				{/* компонент отображения сцены */}
-				<Scene />
+				<Suspense fallback={null}>
+					<Scene />
+				</Suspense>
 
 				{/* компонент отображения освещения */}
 				<Lights/>
 
 				{/* установка взаимодействия с камерой */}
-				<CameraControls ref={cameraRef}/>
+				<CameraControls ref={cameraRef} minPolarAngle={Math.PI / 2.7} maxPolarAngle={Math.PI / 2.15}/>
 			</Canvas>
 
 			<Loader/>

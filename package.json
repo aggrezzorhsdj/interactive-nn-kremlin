@@ -3,7 +3,8 @@
     "version": "0.1.0",
     "scripts": {
         "start": "webpack serve --mode development",
-        "build": "webpack --mode production"
+        "build": "webpack --mode production",
+		"optimization": "node gltf-optimizer.js --input ./public/models/ --output ./public/models/"
     },
     "dependencies": {
         "@babel/preset-typescript": "^7.25.7",
@@ -18,8 +19,10 @@
         "copy-webpack-plugin": "^12.0.2",
         "eslint": "^8.57.1",
         "eslint-config-react-app": "^7.0.1",
+        "gltf-optimizer": "^0.4.0",
         "leva": "^0.9.35",
         "lil-gui": "^0.20.0",
+        "minimist": "^1.2.8",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
         "suspend-react": "^0.1.3",
