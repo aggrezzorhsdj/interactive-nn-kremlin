@@ -3,6 +3,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+/*
+* конфигурация сборщика приложения
+ */
 module.exports = (mode) => ({
 	mode,
 	entry: "./src/index.tsx",
@@ -19,6 +22,7 @@ module.exports = (mode) => ({
 		port: 3030,
 		open: true
 	},
+	// оптимизация посредством разделения файлов библиотек конечной сборки
 	optimization: {
 		splitChunks: {
 			chunks: "all",

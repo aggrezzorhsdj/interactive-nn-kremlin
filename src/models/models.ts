@@ -1,6 +1,19 @@
 import {Group, Mesh, Scene} from "three";
 import {ThreeEvent} from "@react-three/fiber";
+import {GLTF} from "three-stdlib";
 
+/*
+* @param name - машинное имя
+* @param x - координата по оси x
+* @param z - координата по оси z
+* @param url - ссылка на файл модели
+* @param textureUrls - список текстур для модели
+* @param angle - угол поворота модели
+* @param depthY - положение модели относительно конечной координаты y
+* @param title - отображаемой название
+* @param text - отображаемой название
+* @param image - изображение реального здания
+*/
 export interface BuildingItem {
 	name: string;
 	x: number;
@@ -15,21 +28,27 @@ export interface BuildingItem {
 	text?: string;
 	image?: string;
 }
+
+/*
+* Параметры компоненты зданий
+* @param building - параметры здания
+* @param onClick - обработчик нажатия на модель
+ */
 export interface BuildingProps {
 	building: BuildingItem;
-	onClick?: (e: ThreeEvent<MouseEvent>, building: BuildingItem) => void,
-	onPointerEnter?: (e: ThreeEvent<MouseEvent>, building: BuildingItem) => void,
-	onPointerLeave?: (e: ThreeEvent<MouseEvent>, building: BuildingItem) => void,
-}
-export interface BaseModelProps {
-	mesh: Mesh
+	onClick?: (e: ThreeEvent<MouseEvent>, building: BuildingItem) => void
 }
 
-export interface GLTFLoaderResult {
-	nodes: Record<string, Group | Scene>;
-	scene: Group;
+/*
+* Расширенный интерфейс загрузчика GLTFLoader
+ */
+export interface GLTFLoaderResult extends GLTF {
+	nodes?: Record<string, Group | Scene | Mesh>;
 }
 
+/*
+* Типы загружаемых моделей
+ */
 export enum BaseGroups {
 	TERRAIN = "terrain",
 	ROAD = "road",
@@ -39,6 +58,9 @@ export enum BaseGroups {
 	TOWER = "tower"
 }
 
+/*
+* маппинг загружаемых моделей главной сцены для применения параметров материала
+ */
 export const baseGroupsMap: Map<string, BaseGroups> = new Map([
 	["terrain", BaseGroups.TERRAIN],
 	["stairs", BaseGroups.STAIRS],
@@ -62,8 +84,18 @@ export const baseGroupsMap: Map<string, BaseGroups> = new Map([
 	["zachatskaya", BaseGroups.TOWER],
 ]);
 
-export type CameraParams = [number, number, number, number, number, number];
+/*
+* Параметры камеры
+* @param positionX - позиция по x
+* @param positionY - позиция по y
+* @param positionZ - позиция по z
+* @param targetX - направление камеры по x
+* @param targetY - направление камеры по y
+* @param targetZ - направление камеры по z
+ */
+export type CameraParams = [positionX: number, positionY: number, positionZ: number, targetX: number, targetY: number, targetZ: number];
 
+// параметры камеры по умолчанию
 export const DEFAULT_CAMERA_PARAMS: CameraParams = [
 	-2000,
 	1000,

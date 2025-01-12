@@ -1,22 +1,23 @@
 import React, {FC, memo, useEffect, useRef, useState} from "react";
-import {ThreeEvent, useThree} from "@react-three/fiber";
+import {useThree} from "@react-three/fiber";
 import {
-	Box3,
 	DoubleSide,
 	Group,
-	Material,
 	MathUtils,
 	Mesh,
 	MeshPhongMaterial,
-	MeshStandardMaterial,
 	Vector3
 } from "three";
-import {getIntersectionPoint} from "../utils/position";
-import {BaseGroups, baseGroupsMap, BuildingProps} from "../models/models";
+import {getClosestBoxPoint, getIntersectionPoint} from "../utils/position";
+import {BaseGroups, baseGroupsMap, BuildingProps, GLTFLoaderResult} from "../models/models";
 import {Html, useGLTF} from "@react-three/drei";
 import {loadTexture} from "../utils/texture";
 import {Popover} from "antd";
 
+/*
+ * Компонент для отображения здания
+ * @param props: BuildingProps - параметры компоненты
+*/
 const Building: FC<BuildingProps> = ({building, onClick}) => {
 	// параметры модели
 	const {
@@ -35,10 +36,10 @@ const Building: FC<BuildingProps> = ({building, onClick}) => {
 	// состояние для хранения и установки позиции модели
 	const [position, setPosition] = useState<Vector3>(null!);
 
-	// загрузка модели через Three.Loader в зависимости от loaderType - OBJLoader и GLTFLoader
-	const loadedObject: any = useGLTF(url, true);
+	// загрузка glb модели хуком useGLTF
+	const loadedObject: GLTFLoaderResult = useGLTF(url, true);
 
-	// доступ к отображемой группе three.js
+	// доступ к отображаемой группе three.js
 	const groupRef = useRef<Group>(null);
 
 	let object: Group;
@@ -54,78 +55,26 @@ const Building: FC<BuildingProps> = ({building, onClick}) => {
 
 	const [hover, setHover] = useState(false);
 
-	/*const cordX = name + "_x";
-	const cordZ = name + "_z";
-	const cordRotate = name + "_rotate";*/
-
-	/*const controls = useControls(`${name}_controls`, {
-		[cordX]: {value: x, min: -2000, max: 2000},
-		[cordZ]: {value: z, min: -2000, max: 2000},
-		[cordRotate]: {value: angle || 0, min: -360, max: 360},
-	}, {collapsed: true})*/
-
 	useEffect(() => {
-		/*
-		* метод определения точки соприкосновения модели с рельефом
-		* @param x - координата x
-		* @param z - координата z
-		* @param scene - сцена three.js для доступа к рельфеу
-		 */
+		// получение координаты относительно соприкосновения центральной точки модели с рельефом
 		const point = getIntersectionPoint(x, z, scene) || new Vector3(0, 0, 0);
 
-		// определение текущей центральной точки модели
-		const box = new Box3().setFromObject(groupRef.current);
-		const center = new Vector3();
-		const size = new Vector3();
-		box.getCenter(center);
-		box.getSize(size);
+		// определение ближайщей вершины соприкосновения модели с рельефом
+		const closest = getClosestBoxPoint(point, scene, groupRef.current);
 
-		// определение ширины и длины модели
-		const edgeHeight = size.x / 2;
-		const edgeWidth = size.z / 2;
-
-		// определение вершин нижней плоскости модели для определение ближайщей точки к рельефу
-		const intersections = [
-			new Vector3(x - edgeHeight, point.y, z - edgeWidth),
-			new Vector3(x + edgeHeight, point.y, z + edgeWidth),
-			new Vector3(x - edgeHeight, point.y, z + edgeWidth),
-			new Vector3(x + edgeHeight, point.y, z - edgeWidth)
-		]
-			.map(item => {
-				const pointY = getIntersectionPoint(item.x, item.z, scene) || new Vector3(0, 0, 0);
-				return pointY.y;
-			});
 		// установка координаты модели относительно ближайщей вершины к рельефу
-		setPosition(new Vector3(x, Math.min(...intersections), z));
+		setPosition(closest);
 	}, [scene]);
 
-	const hoveredObject = {
-		baseMaterial: null,
-		obj: null
-	};
-
-	const resetMaterial = () => {
-		if (hoveredObject?.obj) {
-			hoveredObject.obj.material = hoveredObject.baseMaterial;
-		}
-	}
-
-	const buildingEnter = (e: ThreeEvent<MouseEvent>) => {
+	// обработчик наведения на башню
+	const buildingEnter = () => {
 		if (baseGroupsMap.get(building.name) === BaseGroups.TOWER) {
 			setHover(true);
-			if (hoveredObject.obj?.name !== building.name) {
-				resetMaterial();
-
-				const mesh = (e.object as Mesh);
-				hoveredObject.obj = mesh;
-				hoveredObject.baseMaterial = (mesh.material as Material).clone();
-				mesh.material= new MeshStandardMaterial({color: 0x4f4f4f});
-			}
 		}
 	}
 
+	// обработчик снятия наведения на башню
 	const buildingLeave = () => {
-		resetMaterial();
 		setHover(false);
 	}
 
@@ -153,6 +102,7 @@ const Building: FC<BuildingProps> = ({building, onClick}) => {
 						material={new MeshPhongMaterial({map, side: DoubleSide})}
 					/>
 				})}
+				{/* Всплывающее окно с выводом названия башни при наведении на нее */}
 				{hover && <Html>
 					<Popover title={building.title || building.name} open={true}></Popover>
 				</Html>}

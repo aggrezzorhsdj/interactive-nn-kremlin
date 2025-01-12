@@ -1,12 +1,15 @@
 import React, {FC, memo} from "react";
 import {useGLTF, useTexture} from "@react-three/drei";
-import {DoubleSide, Mesh, MeshStandardMaterial, Texture} from "three";
+import {DoubleSide, Mesh, MeshPhongMaterial, MeshStandardMaterial, Texture} from "three";
 import {GLTF} from "three-stdlib";
 import {TexturesMaps} from "../constants/textures";
 import {BaseGroups, baseGroupsMap} from "../models/models";
 import Buildings from "./Buildings";
 import {loadTexture} from "../utils/texture";
 
+/*
+ * Компонент для отображения сцены
+*/
 const Scene: FC = () => {
 	// загрузка основной модели с рельефом, стенами, дорогой и тротуарами
 	const base: GLTF = useGLTF("./models/base.glb", true);
@@ -15,26 +18,49 @@ const Scene: FC = () => {
 
 	// установка текстур базовым моделям
 	base.scene.children.forEach((mesh: Mesh) => {
-		let map: Texture = useTexture(TexturesMaps.BRICK_RED);
-		switch (baseGroupsMap.get(mesh.name)) {
-			case BaseGroups.TERRAIN:
-				map = loadTexture(TexturesMaps.GRASS);
-				break;
-			case BaseGroups.STAIRS:
-			case BaseGroups.ROAD:
-				map = useTexture(TexturesMaps.ASPHALT);
-				break;
-		}
+		if (mesh.isMesh) {
+			let map: Texture = useTexture(TexturesMaps.BRICK_RED);
 
-		map.needsUpdate = true;
-		mesh.material = new MeshStandardMaterial({map, side: DoubleSide});
+			switch (baseGroupsMap.get(mesh.name)) {
+				case BaseGroups.TERRAIN:
+					map = loadTexture(TexturesMaps.GRASS);
+					mesh.material = new MeshPhongMaterial({
+						map,
+						shininess: 0,
+						side: DoubleSide
+					});
+
+					break;
+				case BaseGroups.WALL:
+				case BaseGroups.TOWER:
+					const bumpMap = loadTexture(TexturesMaps.BRICK_RED_BUMP);
+					mesh.material = new MeshPhongMaterial({
+						map,
+						bumpMap,
+						shininess: 1,
+						bumpScale: 12,
+						side: DoubleSide
+					});
+					break;
+				case BaseGroups.STAIRS:
+				case BaseGroups.ROAD:
+					map = loadTexture(TexturesMaps.ASPHALT);
+					mesh.material = new MeshStandardMaterial({map, side: DoubleSide});
+
+					break;
+			}
+			mesh.receiveShadow = true;
+			mesh.castShadow = true;
+
+			map.needsUpdate = true;
+		}
 
 	})
 
 	return (
 		<>
 			{/* установка базовой модели на сцену */}
-			<primitive dispose={null} object={base.scene}></primitive>
+			<primitive object={base.scene}></primitive>
 
 			{/* установка зданий */}
 			<Buildings/>

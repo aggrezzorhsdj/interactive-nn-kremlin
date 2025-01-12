@@ -1,6 +1,8 @@
 import {TexturesMaps} from "../constants/textures";
 import {BuildingItem} from "../models/models";
 
+// здания с описанными параметрами
+
 export const buildings: BuildingItem[] = [
 	{
 		name: "arsenal",
@@ -41,15 +43,6 @@ export const buildings: BuildingItem[] = [
 		angle: 0,
 
 	},
-	/*{
-		name: "zelhouse",
-		x: 638,
-		z: 912,
-		url: "./models/zelhouse.glb",
-		textureUrls: [TexturesMaps.SHEET_GREEN, TexturesMaps.BRICK_RED],
-		angle: 0,
-
-	},*/
 	{
 		name: "garage",
 		x: -336,
@@ -80,21 +73,6 @@ export const buildings: BuildingItem[] = [
 		depthY: -2,
 
 	},
-	/*{
-		name: "kapterka",
-		x: -226,
-		z: -975,
-		url: "./models/kapterka.glb",
-		textureUrls: [
-			TexturesMaps.GLASS,
-			"./images/TSerShpak.jpg",
-			TexturesMaps.PUTTY_GREY,
-			TexturesMaps.ROOFING_FELT,
-			TexturesMaps.PUTTY_GREY
-		],
-		depthY: 0,
-
-	},*/
 	{
 		name: "services",
 		x: -139,

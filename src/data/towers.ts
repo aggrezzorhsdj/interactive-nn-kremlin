@@ -1,5 +1,7 @@
 import {BuildingItem} from "../models/models";
 
+// башни с описанными параметрами
+
 export const towers: BuildingItem[] = [
 	{
 		name: "zachatskaya",

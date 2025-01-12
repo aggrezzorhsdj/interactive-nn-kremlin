@@ -6,14 +6,14 @@ import {ThreeEvent} from "@react-three/fiber";
 import Building from "./Building";
 import {useAppStore} from "../Store";
 
+/*
+ * Компонент для отображения зданий и башен
+*/
 const Buildings: FC = () => {
+	// подключению к состоянию приложения
 	const store = useAppStore(state => state);
 
-	const hoveredObject = {
-		baseMaterial: null,
-		obj: null
-	};
-
+	// Обратчик кликов по башням. Устанвливает положение камеры у башни через менеджер состояния.
 	const sceneHandler = (e: ThreeEvent<MouseEvent>, building: BuildingItem) => {
 		if (baseGroupsMap.get(building.name) === BaseGroups.TOWER) {
 			store.setCameraParameters([
@@ -33,9 +33,11 @@ const Buildings: FC = () => {
 	return (
 		<>
 			{
+				// здания
 				buildings.map(item => <Building key={item.name} building={item} />)
 			}
 			{
+				// башни
 				towers.map(item => <Building
 					key={item.name}
 					building={item}
