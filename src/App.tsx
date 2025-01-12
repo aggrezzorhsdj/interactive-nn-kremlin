@@ -1,6 +1,5 @@
 import React, {Suspense, useEffect, useRef} from "react";
 import {Canvas} from "@react-three/fiber";
-import {Lights} from "./components/Light";
 import {CameraControls, Loader} from "@react-three/drei";
 import Scene from "./components/Scene";
 import {useAppStore} from "./Store";
@@ -13,8 +12,11 @@ import {Vector3} from "three";
 */
 export const App = () => {
 	const cameraRef = useRef<CameraControls>();
+
+	// получение параметров камеры из менеджера состояния
 	const {cameraParameters} = useAppStore();
 
+	// установка положения камера при выборе объекта на сцене
 	useEffect(() => {
 		if (cameraRef?.current) {
 			cameraRef.current.setLookAt(...cameraParameters, true).then();
@@ -38,15 +40,14 @@ export const App = () => {
 					<Scene />
 				</Suspense>
 
-				{/* компонент отображения освещения */}
-				<Lights/>
-
-				{/* установка взаимодействия с камерой */}
+				{/* установка взаимодействия с камерой и ограничений*/}
 				<CameraControls ref={cameraRef} minPolarAngle={Math.PI / 2.7} maxPolarAngle={Math.PI / 2.15}/>
 			</Canvas>
 
+			{/* Загрузчик страницы */}
 			<Loader/>
 
+			{/* Компонент отображения модульного окна */}
 			<Info/>
 		</>
 	);

@@ -1,6 +1,7 @@
 import {create} from "zustand/react";
 import {BuildingItem, CameraParams, DEFAULT_CAMERA_PARAMS} from "./models/models";
 
+
 export interface AppStore {
 	selectedBuilding: BuildingItem,
 	cameraParameters: CameraParams;

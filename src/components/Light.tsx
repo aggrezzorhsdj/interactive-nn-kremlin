@@ -1,11 +1,12 @@
-import React from "react";
+import React, {memo} from "react";
 
 /*
  * Компонент для отображения источников света
 */
-export const Lights = () => {
+const Lights = () => {
 	return (
 		<>
+			{/* основной источник света */}
 			<directionalLight
 				castShadow
 				shadow-darkness={true}
@@ -47,3 +48,5 @@ export const Lights = () => {
 		</>
 	);
 }
+
+export default memo(Lights);
