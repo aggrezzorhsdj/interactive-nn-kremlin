@@ -166,6 +166,7 @@ export const buildings: BuildingItem[] = [
 	},
 	{
 		name: "obkom",
+		title: "Правительство Нижегордской области",
 		x: 140,
 		z: 0,
 		url: "./models/obkom.glb",
