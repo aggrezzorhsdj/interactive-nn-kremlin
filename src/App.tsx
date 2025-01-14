@@ -5,7 +5,7 @@ import Scene from "./components/Scene";
 import {useAppStore} from "./Store";
 import Info from "./components/Info";
 import {DEFAULT_CAMERA_PARAMS} from "./models/models";
-import {Vector3} from "three";
+import {MathUtils, Vector3} from "three";
 
 /*
  * Корневой компонент
@@ -41,7 +41,7 @@ export const App = () => {
 				</Suspense>
 
 				{/* установка взаимодействия с камерой и ограничений*/}
-				<CameraControls ref={cameraRef} minPolarAngle={Math.PI / 2.7} maxPolarAngle={Math.PI / 2.15}/>
+				<CameraControls ref={cameraRef} maxPolarAngle={MathUtils.DEG2RAD * 95}/>
 			</Canvas>
 
 			{/* Загрузчик страницы */}

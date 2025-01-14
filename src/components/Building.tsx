@@ -1,11 +1,14 @@
 import React, {FC, memo, useEffect, useRef, useState} from "react";
-import {useThree} from "@react-three/fiber";
+import {ThreeEvent, useThree} from "@react-three/fiber";
 import {
+	Camera,
 	DoubleSide,
 	Group,
 	MathUtils,
 	Mesh,
 	MeshPhongMaterial,
+	MeshStandardMaterial,
+	Object3D,
 	Vector3
 } from "three";
 import {getClosestBoxPoint, getIntersectionPoint} from "../utils/position";
@@ -18,7 +21,7 @@ import {Popover} from "antd";
  * Компонент для отображения здания
  * @param props: BuildingProps - параметры компоненты
 */
-const Building: FC<BuildingProps> = ({building, onClick}) => {
+const Building: FC<BuildingProps> = ({building, onClick, isSelected, clickable}) => {
 	// параметры модели
 	const {
 		x,
@@ -27,7 +30,7 @@ const Building: FC<BuildingProps> = ({building, onClick}) => {
 		name,
 		textureUrls,
 		angle,
-		scale
+		scale,
 	} = building;
 
 	// подключение к общей сцене three.js
@@ -42,8 +45,6 @@ const Building: FC<BuildingProps> = ({building, onClick}) => {
 	// доступ к отображаемой группе three.js
 	const groupRef = useRef<Group>(null);
 
-	let object: Group;
-
 	// извлечение группы из загруженной модели
 	const meshes: Mesh[] = Object
 		.values<any>(loadedObject.nodes)
@@ -51,7 +52,6 @@ const Building: FC<BuildingProps> = ({building, onClick}) => {
 	const group = new Group();
 	group.add(...meshes);
 	group.name = name;
-	object = group;
 
 	const [hover, setHover] = useState(false);
 
@@ -63,17 +63,40 @@ const Building: FC<BuildingProps> = ({building, onClick}) => {
 		const closest = getClosestBoxPoint(point, scene, groupRef.current);
 
 		// установка координаты модели относительно ближайщей вершины к рельефу
-		setPosition(closest);
+		setPosition(point);
 	}, [scene]);
 
 	// обработчик наведения на башню
 	const buildingEnter = () => {
 		setHover(true);
+		document.body.classList.add("pointer");
 	}
 
 	// обработчик снятия наведения на башню
 	const buildingLeave = () => {
 		setHover(false);
+		document.body.classList.remove("pointer");
+	}
+
+	const buildingClick = (e: ThreeEvent<MouseEvent>) => {
+		if (!clickable) {
+			return;
+		}
+
+		if (onClick) {
+			onClick(e, building);
+		}
+
+		setHover(false);
+	}
+
+	// функция расчета положения подсказки над зданием
+	const calculatePosition = (el: Object3D, camera: Camera, size: {width: number, height: number}): number[] => {
+		const objectPos = new Vector3().setFromMatrixPosition(el.matrixWorld)
+		objectPos.project(camera)
+		const widthHalf = size.width / 2
+		const heightHalf = size.height / 2
+		return [objectPos.x * widthHalf + widthHalf, (-(objectPos.y * heightHalf) + heightHalf) - 50]
 	}
 
 	// вывод модели
@@ -84,25 +107,32 @@ const Building: FC<BuildingProps> = ({building, onClick}) => {
 				ref={groupRef}
 				position={new Vector3(x, position?.y || 0, z)}
 				rotation-y={MathUtils.DEG2RAD * (angle ?? 0)} scale={scale ?? 1}
-				onClick={(e) => onClick && onClick(e, building)}
-				onPointerLeave={buildingLeave}
-				onPointerEnter={buildingEnter}
+				onClick={buildingClick}
+				onPointerLeave={!isSelected && buildingLeave}
+				onPointerEnter={!isSelected && buildingEnter}
 			>
 				{/* вывод моделей из группы с указанной текстурой из параметров */}
-				{object?.children?.map((mesh: Mesh, index) => {
+				{group?.children?.map((mesh: Mesh, index) => {
 					const map = loadTexture(textureUrls[index]);
+					const material = hover && !isSelected ?
+						new MeshStandardMaterial({color: 0xfadb14}) :
+						new MeshPhongMaterial({map, side: DoubleSide});
 
 					return <mesh
 						key={mesh.id}
 						castShadow
 						receiveShadow
 						geometry={mesh.geometry}
-						material={new MeshPhongMaterial({map, side: DoubleSide})}
+						material={material}
 					/>
 				})}
 				{/* Всплывающее окно с выводом названия башни при наведении на нее */}
-				{hover && <Html>
-					<Popover title={building.title || building.name} open={true}></Popover>
+				{hover && !isSelected && <Html calculatePosition={calculatePosition}>
+					<Popover
+						open={true}
+						title={<h3>{building.title || building.name}</h3>}
+						content={clickable && `Нажмите для просмотра`}
+					/>
 				</Html>}
 			</group>
 		</>

@@ -32,10 +32,14 @@ export interface BuildingItem {
 /*
 * Параметры компоненты зданий
 * @param building - параметры здания
+* @param isSelected - флаг для проверки выбрано ли здание
+* @param clickable - флаг для проверки возможности выбора здания
 * @param onClick - обработчик нажатия на модель
  */
 export interface BuildingProps {
 	building: BuildingItem;
+	isSelected?: boolean;
+	clickable?: boolean;
 	onClick?: (e: ThreeEvent<MouseEvent>, building: BuildingItem) => void
 }
 

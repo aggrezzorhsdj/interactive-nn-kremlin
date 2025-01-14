@@ -108,7 +108,7 @@ export const buildings: BuildingItem[] = [
 	{
 		name: "hospital",
 		x: 420,
-		z: -138,
+		z: -126,
 		url: "./models/hospital.glb",
 		textureUrls: [
 			TexturesMaps.PUTTY_BEIGE,
@@ -175,9 +175,9 @@ export const buildings: BuildingItem[] = [
 			TexturesMaps.WOOD,
 			TexturesMaps.GLASS,
 			TexturesMaps.PUTTY,
-			TexturesMaps.PUTTY
-		],
-		depthY: -2,
+			TexturesMaps.PUTTY,
+			TexturesMaps.PUTTY,
+		]
 
 	},
 	{
@@ -260,9 +260,9 @@ export const buildings: BuildingItem[] = [
 			TexturesMaps.PUTTY,
 			TexturesMaps.PUTTY_BEIGE,
 			TexturesMaps.PUTTY,
+			TexturesMaps.ROOFING_FELT,
 			TexturesMaps.ROOFING_FELT
 		],
-		depthY: -2,
 
 	},
 	{

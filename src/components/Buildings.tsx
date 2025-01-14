@@ -34,14 +34,19 @@ const Buildings: FC = () => {
 		<>
 			{
 				// здания
-				buildings.map(item => <Building key={item.name} building={item} />)
+				buildings.map(item => <Building
+					key={item.name}
+					building={item}
+				/>)
 			}
 			{
 				// башни
 				towers.map(item => <Building
 					key={item.name}
 					building={item}
+					clickable={true}
 					onClick={sceneHandler}
+					isSelected={store.selectedBuilding?.name === item.name}
 				/>)
 			}
 		</>
