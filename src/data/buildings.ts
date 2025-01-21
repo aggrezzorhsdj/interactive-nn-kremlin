@@ -6,6 +6,7 @@ import {BuildingItem} from "../models/models";
 export const buildings: BuildingItem[] = [
 	{
 		name: "arsenal",
+		title: "Арсенал",
 		x: 382,
 		z: -730,
 		url: "./models/arsenal.glb",
@@ -15,6 +16,7 @@ export const buildings: BuildingItem[] = [
 	},
 	{
 		name: "hozkorpus",
+		title: "Хозяйственный корпус",
 		x: 688,
 		z: 986,
 		url: "./models/hozkorpus.glb",
@@ -24,6 +26,7 @@ export const buildings: BuildingItem[] = [
 	},
 	{
 		name: "sovet",
+		title: "Здание советов",
 		x: -119,
 		z: -646,
 		url: "./models/sovet.glb",
@@ -45,6 +48,7 @@ export const buildings: BuildingItem[] = [
 	},
 	{
 		name: "garage",
+		title: "Гараж",
 		x: -336,
 		z: -1380,
 		url: "./models/garage.glb",
@@ -60,6 +64,7 @@ export const buildings: BuildingItem[] = [
 	},
 	{
 		name: "kazar",
+		title: "Казармы",
 		x: 729,
 		z: 347,
 		url: "./models/kazar.glb",
@@ -75,6 +80,7 @@ export const buildings: BuildingItem[] = [
 	},
 	{
 		name: "services",
+		title: "Арбитражный суд",
 		x: -139,
 		z: -1240,
 		url: "./models/services.glb",
@@ -92,6 +98,7 @@ export const buildings: BuildingItem[] = [
 	},
 	{
 		name: "vicegub",
+		title: "Дом вице-губернатора",
 		x: 420,
 		z: 132,
 		url: "./models/vicegub.glb",
@@ -107,6 +114,7 @@ export const buildings: BuildingItem[] = [
 	},
 	{
 		name: "hospital",
+		title: "Казарма гарнизонного батальона",
 		x: 420,
 		z: -126,
 		url: "./models/hospital.glb",
@@ -131,6 +139,7 @@ export const buildings: BuildingItem[] = [
 	},
 	{
 		name: "kotel",
+		title: "Котельная",
 		x: -266,
 		z: -1135,
 		url: "./models/kotel.glb",
@@ -146,6 +155,7 @@ export const buildings: BuildingItem[] = [
 	},
 	{
 		name: "muzei",
+		title: "Художественный музей",
 		x: -291,
 		z: -974,
 		url: "./models/muzei.glb",
@@ -183,6 +193,7 @@ export const buildings: BuildingItem[] = [
 	},
 	{
 		name: "minin",
+		title: "Обелиск К. Минину и Д. Пожарскому",
 		x: -355,
 		z: 131,
 		url: "./models/minin.glb",
@@ -199,6 +210,7 @@ export const buildings: BuildingItem[] = [
 	},
 	{
 		name: "stella",
+		title: "Георгий Победоносец на коне, поражающий змея",
 		x: 687,
 		z: -158,
 		url: "./models/stella.glb",
@@ -212,6 +224,7 @@ export const buildings: BuildingItem[] = [
 	},
 	{
 		name: "church",
+		title: "Собор Архангела Михаила",
 		x: -78,
 		z: 360,
 		url: "./models/church.glb",
@@ -238,6 +251,7 @@ export const buildings: BuildingItem[] = [
 	},
 	{
 		name: "prisut",
+		title: "Заксобрание",
 		x: 231,
 		z: 733,
 		url: "./models/prisut.glb",
@@ -254,6 +268,7 @@ export const buildings: BuildingItem[] = [
 	},
 	{
 		name: "ministry",
+		title: "Здание министерств",
 		x: 387,
 		z: 1182,
 		url: "./models/ministry.glb",
@@ -268,6 +283,7 @@ export const buildings: BuildingItem[] = [
 	},
 	{
 		name: "manezh",
+		title: "Манеж",
 		x: 33,
 		z: 1251,
 		url: "./models/manezh.glb",
@@ -288,6 +304,7 @@ export const buildings: BuildingItem[] = [
 	},
 	{
 		name: "financial",
+		title: "Банковская контора",
 		x: 33,
 		z: 1048,
 		url: "./models/financial.glb",
